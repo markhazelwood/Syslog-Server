@@ -44,27 +44,16 @@ namespace SyslogServer
     {
         public delegate void OnMessageReceived(Message message);
         public static event OnMessageReceived MessageReceived;
-        //public static Settings _Settings;
-		//static TcpServer _Server;
-		//
-       //
+       
        [STAThread]
         static void Main()
         {
-        	//Properties.Settings.Default.Upgrade();
-            Settings.port = Properties.Settings.Default.port;
-			//Settings.port=6514;
+        	
+            		Settings.port = Properties.Settings.Default.port;
 			Settings.ip= Properties.Settings.Default.ip;
-			//Settings.ip="10.10.10.2";
 			Settings.ssl = Properties.Settings.Default.ssl;
-			//Settings.ssl=true;
 			Settings.PfxFilename= Properties.Settings.Default.Pfxfilename;
-			//Settings.PfxFilename="localservernopass.pfx";
 			Settings.PfxPassword= Properties.Settings.Default.Pfxpassword;
-			//Settings.PfxPassword="";
-			//Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			//MessageBox.Show(config.FilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-//MessageBox.Show("Start", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			Settings.Sqlitedb = Properties.Settings.Default.sqlitedb;
 			Settings.mailfrom= Properties.Settings.Default.mailfrom;
 			Settings.mailto=Properties.Settings.Default.mailto;
@@ -81,33 +70,26 @@ namespace SyslogServer
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-//MessageBox.Show("Open DB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             string createTableQuery =
                 "CREATE TABLE IF NOT EXISTS logs (id integer primary key,host text default NULL,facility varchar(10) default NULL,severity varchar(10) default NULL,date text default CURRENT_TIMESTAMP,msg text)";
             DataTable createTableResult = Settings.Sql.Query(createTableQuery);
 
-            //MessageBox.Show("Created table", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            
+           
             
             
             try
             {
-                //var udp = new UdpClient(514);
-                //UdpListener(udp);
-            Settings._Server = new TcpServer(Settings.ip, Settings.port, Settings.ssl, Settings.PfxFilename, Settings.PfxPassword);
-			Settings._Server.ClientConnected = ClientConnected;
-            Settings._Server.ClientDisconnected = ClientDisconnected;
-            Settings._Server.DataReceived = DataReceived;
-            // _Server.IdleClientTimeoutSeconds = 10;
-            //_Server.Debug = false;
-            Settings._Server.MutuallyAuthenticate = false;
-            Settings._Server.AcceptInvalidCertificates = true;
-            Settings._Server.Start();
+	        Settings._Server = new TcpServer(Settings.ip, Settings.port, Settings.ssl, Settings.PfxFilename, Settings.PfxPassword);
+		Settings._Server.ClientConnected = ClientConnected;
+        	Settings._Server.ClientDisconnected = ClientDisconnected;
+            	Settings._Server.DataReceived = DataReceived;
+            	Settings._Server.MutuallyAuthenticate = false;
+            	Settings._Server.AcceptInvalidCertificates = true;
+            	Settings._Server.Start();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1());
-			Settings._Server.Dispose();
-                //udp.Close();
+		Settings._Server.Dispose();
             }
             catch (Exception ex)
             {
@@ -127,8 +109,6 @@ static bool ClientConnected(string ipPort)
         }        
         static bool DataReceived(string ipPort, byte[] data)
         {
-        	//MessageBox.Show(Encoding.UTF8.GetString(data),"Data",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
-            //Console.WriteLine("[" + ipPort + "] " + Encoding.UTF8.GetString(data));
              Regex _re = new Regex(@"^(?<PRI>\<\d{1,3}\>)?(?<HDR>(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s[0-3][0-9]\s[0-9]{4}\s[0-9]{2}\:[0-9]{2}\:[0-9]{2}\s[^ ]+?\s)?:\s(?<MSG>.+)?", RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled);
 
                 Match m = _re.Match(Encoding.UTF8.GetString(data));
@@ -155,12 +135,10 @@ static bool ClientConnected(string ipPort)
                         int idx = hdr.LastIndexOf(' ');
                         msg.Datestamp = DateTime.ParseExact(hdr.Substring(0, idx), "MMM dd yyyy HH:mm:ss", null);
                         msg.Hostname = hdr.Substring(idx + 1);
-                        //MessageBox.Show(msg.Hostname ,"Hostname",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
                     }
                     else
                     {
                         msg.Datestamp = DateTime.Now;
-
                         
                     }
 
@@ -181,11 +159,6 @@ static bool ClientConnected(string ipPort)
             			
             			try
             {
- 
-     
-     
-     
-     
      
      //Generate Message 
      var mymessage = new MimeMailMessage();
@@ -219,81 +192,6 @@ static bool ClientConnected(string ipPort)
         
     
             return true;
-        }
-        /*
-#pragma warning disable 1998 // Async method lacks 'await' operators and will run synchronously
-        static async Task DataReceived(string ipPort, byte[] data)
-#pragma warning restore 1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            Console.WriteLine("[" + ipPort + "]: " + Encoding.UTF8.GetString(data));
-        }
-        */
-
-        private async static void UdpListener(UdpClient udp)
-        {
-            UdpReceiveResult receiveResult;
-            Regex _re = new Regex(@"(?<PRI>\<\d{1,3}\>)?(?<HDR>(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s[0-3][0-9]\s[0-9]{4}\s[0-9]{2}\:[0-9]{2}\:[0-9]{2}\s[^ ]+?\s)?:\s(?<MSG>.+)?
-?", RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled);
-
-            while (true)
-            {
-                try
-                {
-                    receiveResult = await udp.ReceiveAsync();
-                }
-                catch (ObjectDisposedException)
-                {
-                    return;
-                }
-
-                Match m = _re.Match(Encoding.ASCII.GetString(receiveResult.Buffer));
-                if (m.Success)
-                {
-                    Message msg = new Message();
-
-                    if (m.Groups["PRI"].Success)
-                    {
-                        string pri = m.Groups["PRI"].Value;
-                        int priority = Int32.Parse(pri.Substring(1, pri.Length - 2));
-                        msg.Facility = (FacilityType)Math.Floor((double)priority / 8);
-                        msg.Severity = (SeverityType)(priority % 8);
-                    }
-                    else
-                    {
-                        msg.Facility = FacilityType.User;
-                        msg.Severity = SeverityType.Notice;
-                    }
-
-                    if (m.Groups["HDR"].Success)
-                    {
-                        string hdr = m.Groups["HDR"].Value.TrimEnd();
-                        int idx = hdr.LastIndexOf(' ');
-                        msg.Datestamp = DateTime.ParseExact(hdr.Substring(0, idx), "MMM dd HH:mm:ss", null);
-                        msg.Hostname = hdr.Substring(idx + 1);
-                    }
-                    else
-                    {
-                        msg.Datestamp = DateTime.Now;
-
-                        try
-                        {
-                            IPHostEntry he = Dns.GetHostEntry(receiveResult.RemoteEndPoint.Address);
-                            msg.Hostname = he.HostName;
-                        }
-                        catch (SocketException)
-                        {
-                            msg.Hostname = receiveResult.RemoteEndPoint.Address.ToString();
-                        }
-                    }
-
-                    msg.Content = m.Groups["MSG"].Value;
-                    msg.RemoteIP = receiveResult.RemoteEndPoint.Address.ToString();
-                    msg.LocalDate = DateTime.Now;
-
-                    if (MessageReceived != null)
-                        MessageReceived(msg);
-                }
-            }
         }
     }
 
