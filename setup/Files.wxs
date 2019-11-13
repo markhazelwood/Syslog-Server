@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="TARGETDIR">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="SyslogServer">
+					<Component Id="MyComponent" Guid="2A8D11A7-B146-45FB-8891-AA88699EEFB0" DiskId="1">
+						<File Id="LicenseFile" Name="license.rtf" Source="license.rtf">
+						</File>
+						<File Id="ExeFile" Name="syslogserver.exe" Source="../syslogserver/bin/debug/syslogserver.exe">
+						</File>
+						<File Id="AegisImplicitMail" Name="AegisImplicitMail.dll" Source="../syslogserver/bin/debug/AegisImplicitMail.dll">
+						</File>
+						<File Id="SqliteWrapper" Name="SqliteWrapper.dll" Source="../syslogserver/bin/debug/SqliteWrapper.dll">
+						</File>
+						<File Id="Equin.ApplicationFramework.BindingListView" Name="Equin.ApplicationFramework.BindingListView.dll" Source="../syslogserver/bin/debug/Equin.ApplicationFramework.BindingListView.dll">
+						</File>
+						<File Id="SimpleTcp" Name="SimpleTcp.dll" Source="../syslogserver/bin/debug/SimpleTcp.dll">
+						</File>
+						<File Id="System.Data.SQLite" Name="System.Data.SQLite.dll" Source="../syslogserver/bin/debug/System.Data.SQLite.dll">
+						</File>
+					</Component>
+				</Directory>
+			</Directory>
+		</DirectoryRef>
+	</Fragment>
+</Wix>
