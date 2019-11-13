@@ -97,17 +97,11 @@ namespace SyslogServer
         {
             using (Form3 form = new Form3())
             {
-                //form.Facilities = facilities;
-                //form.Severities = severities;
-                //form.Hosts = hosts;
-                //form.Contents = contents;
+               
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    //facilities = form.Facilities;
-                    //severities = form.Severities;
-                    //hosts = form.Hosts;
-                    //contents = form.Contents;
+                   
 
                     
                 }
@@ -178,13 +172,13 @@ namespace SyslogServer
         	
         	if ((int) x < 5)
         	
-        	//if (this.dataGridView1[1, e.RowIndex].Value.ToString() == "Alert")
-        	{
-    //e.Graphics.DrawString(bgRowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
-    this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(0xe0, 0x00, 0x00);
-        }
         	
-        	}        	
+        		{
+    
+    			this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(0xe0, 0x00, 0x00);
+        		}
+        	
+        }        	
         internal void ApplyFilter(BindingListView<Message> view)
         {
             Predicate<Message> predicate = msg => true;
