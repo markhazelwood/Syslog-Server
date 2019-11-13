@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="SyslogServer.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings>
+    <Setting Name="ip" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">127.0.0.1</Value>
+    </Setting>
+    <Setting Name="mailfrom" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">ASA@test.com</Value>
+    </Setting>
+    <Setting Name="mailpassword" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">pass</Value>
+    </Setting>
+    <Setting Name="mailport" Type="System.Int32" Scope="User" Roaming="false">
+      <Value Profile="(Default)">587</Value>
+    </Setting>
+    <Setting Name="mailserver" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">test.com</Value>
+    </Setting>
+    <Setting Name="mailto" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">mark@test.com</Value>
+    </Setting>
+    <Setting Name="mailusername" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">mark@test.com</Value>
+    </Setting>
+    <Setting Name="Pfxfilename" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">localservernopass.pfx</Value>
+    </Setting>
+    <Setting Name="Pfxpassword" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">none</Value>
+    </Setting>
+    <Setting Name="port" Type="System.Int32" Scope="User" Roaming="false">
+      <Value Profile="(Default)">6514</Value>
+    </Setting>
+    <Setting Name="sqlitedb" Type="System.String" Scope="User" Roaming="false">
+      <Value Profile="(Default)">log.db3</Value>
+    </Setting>
+    <Setting Name="ssl" Type="System.Boolean" Scope="User" Roaming="false">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
