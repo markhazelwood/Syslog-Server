@@ -63,7 +63,7 @@ namespace SyslogServer
 			
 			
 			Properties.Settings.Default.Save();
-			//MessageBox.Show(Properties.Settings.Default.Pfxfilename, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+			
 if (MessageBox.Show("This will require a restart. Are you sure?", "Confirm Restart", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
 				//
